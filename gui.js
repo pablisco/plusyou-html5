@@ -9,19 +9,19 @@ String.format = function() {
   return s;
 }
 
-var ITEM_TEMPLATE =" <li><a href='#'>{0}<span class='small right'>{1}</span><div class='small'>{2}<span class='right'>{3}km away</span></div></a></li>";
+var ITEM_TEMPLATE = "<li><a href='#'>{0}<span class='small right'>{1}</span><div class='small'>{2}<span class='right'>{3}km away</span></div></a></li>";
 var DESCRIPTION_LENGTH_LIMIT = 20;
 
 function createResultItem(oportunity) {
 	var title = oportunity.title;
-	var date = oportunity.date;
+	var date = dateFormat(oportunity.date, "dd/mm/yyyy");
 	var description = oportunity.description;
 	if (description.length > DESCRIPTION_LENGTH_LIMIT) {
 		description = description.substring(0, DESCRIPTION_LENGTH_LIMIT - 3) + "...";
 	};
 	var distance = oportunity.distance;
 
-	return ITEM_TEMPLATE.format(title, date, description, distance);
+	return String.format(ITEM_TEMPLATE, title, date, description, distance);
 }
 
 function populateSearch(oportunities) {
@@ -31,5 +31,5 @@ function populateSearch(oportunities) {
 		var data = createResultItem(oportunities[rowIndex]);
 		resultList.append(data);
 	});
-	resultList.listView('refresh');
+	resultList.listview('refresh');
 }
