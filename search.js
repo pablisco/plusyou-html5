@@ -1,4 +1,4 @@
-$(function() {
+$(document).delegate('#search', 'pageinit', function() {
   var provider_api = 'http://localhost:8000/openplanetideas-plusyou-provider';
   var beginDate = new Date();
   beginDate.setMonth(beginDate.getMonth() - 10);
