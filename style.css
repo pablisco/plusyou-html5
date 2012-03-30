@@ -14,6 +14,10 @@
 	text-align: center;
 }
 
+.event-type {
+	width: 100%;
+}
+
 /* B
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -151,5 +155,9 @@
 .ui-btn-down-b {
 	font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 	text-decoration: none;
+}
+
+.ui-select {
+	width: 100% !important;
 }
 
