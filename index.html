@@ -4,13 +4,22 @@
   <title>+U Mobile</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="libs/jquery.ui.datepicker.css" />
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+  <script>
+    //reset type=date inputs to text
+    $( document ).bind( "mobileinit", function(){
+      $.mobile.page.prototype.options.degradeInputs.date = true;
+    }); 
+  </script>
   <script src="jquery.xml2json.js"></script>
   <script src="date.format.js"></script>
   <script src="gui.js"></script>
   <script src="search.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+  <script src="libs/jquery.ui.datepicker.js"></script>
+  <script src="libs/jquery.ui.datepicker.mobile.js"></script>
 </head> 
 <body> 
   
@@ -46,8 +55,9 @@
     </div>
     <div data-role="content">
       <div class="search-options">
-        <a data-inline="true" data-role="button" href="#">Map</a>
-        <a data-inline="true" data-role="button" href="#" data-theme="b">Options</a>
+        <a data-inline="true" data-role="button" href="#">Map</a>        
+        <a data-inline="true" data-role="button" href="#options_dialog" data-theme="b" data-rel="dialog">Options</a>
+
       </div>
       <ul data-role="listview" class="opportunities" data-filter="true"  data-filter-placeholder="Filter this list" id="results-list">
         <li>Loading...</a></li>
@@ -84,6 +94,57 @@
     </div>
     <p>Thanks</p>    
   </div>
+
+    <div data-role="page" id="options_dialog" >
+    <div data-role="header" data-theme="b">
+      <h1>Options</h1>
+
+    </div>
+
+    <div data-role="content" data-theme="c">
+      <form action="#" method="get">
+        <div data-role="fieldcontain" class="event-type">
+        <select name="event-type" id="event-type">
+          <option value="All Kind of Events">All Kind of Events</option>
+          <option value="Art and Culture">Art and Culture</option>
+          <option value="Comunity Services">Comunity Services</option>
+          <option value="Disability">Disability</option>
+          <option value="Education and Literacy">Education and Literacy</option>
+          <option value="Elderly">Elderly</option>
+          <option value="Environment">Environment</option>
+          <option value="Music">Music</option>
+          <option value="Politics">Politics</option>
+          <option value="Sports and Outdoor Activities">Sports and Outdoor Activities</option>
+        </select>
+      </div>
+      <div id="fromDateContainer" date-role="fieldcontain">
+        <label for="fromDate">From:</label>
+        <input type="date" name="fromDate" id="fromDate" value=""  /> 
+      </div>
+      <div id="untilDateContainer" date-role="fieldcontain">
+        <label for="untilDate">Until:</label>
+        <input type="date" name="untilDate" id="untilDate" value=""  /> 
+      </div>
+      <div data-role="fieldcontain" class="distance-limit">
+        <select name="distance-limit" id="distance-limit" data-inline="true" >
+          <option value="1">Up to 1 km away</option>
+          <option value="2">Up to 2 km away</option>
+          <option value="5">Up to 5 km away</option>
+          <option value="10">Up to 10 km away</option>
+          <option value="25">Up to 25 km away</option>
+          <option value="50">Up to 50 km away</option>
+          <option value="100">Up to 100 km away</option>
+        </select>
+      </div>
+      </form>
+      Your current loaction is #pending#
+      <div date-role="fieldcontain" id="bottom-buttons">
+        <a data-inline="true" data-role="button" href="#" data-theme="b" data-rel="dialog">Search</a>
+        <a data-inline="true" data-role="button" href="#">Cancel</a>        
+      </div>   
+    </div>
+  </div>
+
 
 </body>
 </html>

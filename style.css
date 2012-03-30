@@ -14,8 +14,17 @@
 	text-align: center;
 }
 
-.event-type {
+.event-type, .distance-limit {
 	width: 100%;
+}
+
+#fromDateContainer .ui-corner-bottom, #untilDateContainer .ui-corner-bottom {
+	visibility: hidden;
+	height: 0px;
+}
+
+.ui-select {
+	display: inline;
 }
 
 /* B

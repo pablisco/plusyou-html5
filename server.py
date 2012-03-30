@@ -3,7 +3,7 @@ import urllib
 
 from SimpleHTTPServer import SimpleHTTPRequestHandler, test
 
-PROVIDER_URL = 'http://localhost:8080' 
+PROVIDER_URL = 'http://172.16.131.182:8080' 
 
 class ProxyingHTTPHandler(SimpleHTTPRequestHandler):
 
