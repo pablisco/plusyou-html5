@@ -8,13 +8,6 @@ $(function() {
   var latitude = 50.9;
   var longitude = 4.4;
   var vendor = 1;
-  var pad = function(n) {
-    return (n < 10 ? '0' + n : '' + n);
-  };
-  var formatDate = function(d) {
-    return '' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
-  };
-
   // TODO: Use Modernizr.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -25,12 +18,12 @@ $(function() {
   }
   var getOpportunities = function() {
     var url = provider_api + '/opportunities'
-            + ';beginDate='+formatDate(beginDate)
-            + ';endDate='+formatDate(endDate)
-            + ';distance='+distance
-            + ';latitude='+latitude
-            + ';longitude='+longitude
-            + ';vendor='+vendor;
+            + ';beginDate=' + beginDate.format("yyyymmdd")
+            + ';endDate=' + endDate.format("yyyymmdd")
+            + ';distance=' + distance
+            + ';latitude=' + latitude
+            + ';longitude=' + longitude
+            + ';vendor=' + vendor;
     $.ajax({
       url: url,
       success: function(data) {

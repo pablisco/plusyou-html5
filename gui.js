@@ -14,7 +14,7 @@ var DESCRIPTION_LENGTH_LIMIT = 20;
 
 function createResultItem(oportunity) {
 	var title = oportunity.title;
-	var date = oportunity.date;
+	var date = dateFormat(oportunity.date, "dd/mm/yyyy");
 	var description = oportunity.description;
 	if (description.length > DESCRIPTION_LENGTH_LIMIT) {
 		description = description.substring(0, DESCRIPTION_LENGTH_LIMIT - 3) + "...";
