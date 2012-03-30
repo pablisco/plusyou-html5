@@ -25,7 +25,11 @@ function createResultItem(oportunity) {
 }
 
 function populateSearch(oportunities) {
-	for(var i = 0, n = oportunities.length; i < n;i++) {
-		
-	}
+	var resultList = $('#results-list');
+	resultList.empty();
+	$.each(oportunities, function(rowIndex) {
+		var data = createResultItem(oportunities[rowIndex]);
+		resultList.append(data);
+	});
+	resultList.listView('refresh');
 }
