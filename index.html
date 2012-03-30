@@ -6,20 +6,80 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head> 
 <body> 
+  
 
-<div data-role="page">
+  <div data-role="page" id="feeds"> 
 
-  <div data-role="header">
-    <h1>My Title</h1>
-  </div><!-- /header -->
+    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
 
-  <div data-role="content"> 
-    <p>Hello world</p>    
-  </div><!-- /content -->
+    <div data-role="navbar" class="nav-plusyou">
+      <ul>
+        <li><a href="#feeds" data-icon="home" data-theme="b" class="ui-btn-active">Feed</a></li>
+        <li><a href="#search" data-icon="search" data-theme="b">Volunteer</a></li>
+        <li><a href="#myevents" data-icon="star" data-theme="b">My Events</a></li>
+        <li><a href="#awards" data-icon="grid" data-theme="b">Thanks</a></li>
+      </ul>
+    </div>
+    <div data-role="content">
+      My feed
+    </div>    
+</div>
 
-</div><!-- /page -->
+  <div data-role="page" id="search"> 
+
+    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+
+    <div data-role="navbar" class="nav-plusyou">
+      <ul>
+        <li><a href="#feeds" data-icon="home" data-theme="b">Feed</a></li>
+        <li><a href="#search" data-icon="search" data-theme="b" class="ui-btn-active">Volunteer</a></li>
+        <li><a href="#myevents" data-icon="star" data-theme="b">My Events</a></li>
+        <li><a href="#awards" data-icon="grid" data-theme="b">Thanks</a></li>
+      </ul>
+    </div>
+    <div data-role="content">
+      <ul data-role="listview" data-inset="true" class="opportunities">
+        <li><a href="#">Help VT4 <span class="small right">30/03/2012</span><div class="small">This is is simply a description<span class="right">0.24km away</span></div></a></li>
+        <li><a href="#">Elderly walking<span class="small right">30/03/2012</span><div class="small">This is is simply a description<span class="right">0.24km away</span></div></a></li>
+        <li><a href="#">Themes cleanning<span class="small right">30/03/2012</span><div class="small">This is is simply a description<span class="right">0.24km away</span></div></a></li>
+        <li><a href="#">IT elder support<span class="small right">30/03/2012</span><div class="small">This is is simply a description<span class="right">0.24km away</span></div></a></li>
+        <li><a href="#">Play in the park<span class="small right">30/03/2012</span><div class="small">This is is simply a description<span class="right">0.24km away</span></div></a></li>
+      </ul>
+    </div>     
+  </div>
+
+  <div data-role="page" id="myevents"> 
+
+    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+
+    <div data-role="navbar" class="nav-plusyou">
+      <ul>
+        <li><a href="#feeds" data-icon="home" data-theme="b">Feed</a></li>
+        <li><a href="#search" data-icon="search" data-theme="b">Volunteer</a></li>
+        <li><a href="#myevents" data-icon="star" data-theme="b" class="ui-btn-active">My Events</a></li>
+        <li><a href="#awards" data-icon="grid" data-theme="b">Thanks</a></li>
+      </ul>
+    </div>
+    <p>My Events</p>    
+  </div>
+
+  <div data-role="page" id="awards"> 
+
+    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+
+    <div data-role="navbar" class="nav-plusyou">
+      <ul>
+        <li><a href="#feeds" data-icon="home" data-theme="b">Feed</a></li>
+        <li><a href="#search" data-icon="search" data-theme="b">Volunteer</a></li>
+        <li><a href="#myevents" data-icon="star" data-theme="b">My Events</a></li>
+        <li><a href="#awards" data-icon="grid" data-theme="b" class="ui-btn-active">Thanks</a></li>
+      </ul>
+    </div>
+    <p>Thanks</p>    
+  </div>
 
 </body>
 </html>
