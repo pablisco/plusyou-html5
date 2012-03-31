@@ -3,7 +3,8 @@
   <head> 
   <title>+U Mobile</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="libs/jquery.ui.datepicker.css" />
   <!-- HACK :D Can't make $.getJSON work to load as a JSON file -->
@@ -13,72 +14,22 @@
     </script>
   <script>
 
-    var map;
-    var markersArray = [];
+  <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBldGW_ZqvaIfJdqOf4UCEDh0VUWK-rFlU&sensor=true"></script>
+  <script src="jquery.mobile.router.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+  <script src="libs/jquery.ui.datepicker.js"></script>
+  <script src="libs/jquery.ui.datepicker.mobile.js"></script>
+  <script src="libs/jquery.xml2json.js"></script>
+  <script src="libs/date.format.js"></script>
 
-    function addMarker(location) {
-      marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
-      markersArray.push(marker);
-    }
-
-    // Removes the overlays from the map, but keeps them in the array
-    function clearOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(null);
-        }
-      }
-    }
-
-    // Shows any overlays currently in the array
-    function showOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(map);
-        }
-      }
-    }
-
-    // Deletes all markers in the array by removing references to them
-    function deleteOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(null);
-        }
-        markersArray.length = 0;
-      }
-    }
-
+  <script>
     //reset type=date inputs to text
     $( document ).bind( "mobileinit", function(){
       $.mobile.page.prototype.options.degradeInputs.date = true;
     });
-
-    // mapy stuff
-    function loadMap() {
-
-      var latitude = 50.9;
-      var longitude = 0.4;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          latitude = position.coords.latitude;
-          longitude = position.coords.longitude;
-        });
-      }
-      var myOptions = {
-        center: new google.maps.LatLng(latitude, longitude),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      map = new google.maps.Map(document.getElementById("map"),
-          myOptions);
-    }
   </script>
-  <script src="jquery.xml2json.js"></script>
-  <script src="date.format.js"></script>
+
   <script src="gui.js"></script>
   <script src="search.js"></script>
   <!-- <script src="awards.js"></script> -->
@@ -86,8 +37,7 @@
   <script src="libs/jquery.ui.datepicker.js"></script>
   <script src="libs/jquery.ui.datepicker.mobile.js"></script>
 </head> 
-<body onLoad="loadMap()"> 
-  
+<body> 
 
   <div data-role="page" id="feeds" data-theme="d"> 
 
@@ -248,6 +198,26 @@
       </div>  
       </form> 
     </div>
+  </div>
+
+  <div data-role="page" id="event-details">
+
+    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+
+    <div data-role="content" class="event-details">
+      <p>Details</p>
+    </div>
+
+    <div data-role="navbar" class="nav-plusyou">
+      <ul>
+        <li><a href="#join" data-icon="join" data-theme="b">Join</a></li>
+        <li><a href="#share" data-icon="share" data-theme="b">Share</a></li>
+        <li><a href="#invite" data-icon="invite" data-theme="b">Invite</a></li>
+      </ul>
+    </div>
+    <div data-role="content" class="event-map">
+      <p>Map</p>
+    </div>     
   </div>
 
 </body>
