@@ -18,77 +18,16 @@
   <script src="libs/date.format.js"></script>
 
   <script>
-
-    var map;
-    var markersArray = [];
-
-    function addMarker(location) {
-      marker = new google.maps.Marker({
-        position: location,
-        map: map
-      });
-      markersArray.push(marker);
-    }
-
-    // Removes the overlays from the map, but keeps them in the array
-    function clearOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(null);
-        }
-      }
-    }
-
-    // Shows any overlays currently in the array
-    function showOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(map);
-        }
-      }
-    }
-
-    // Deletes all markers in the array by removing references to them
-    function deleteOverlays() {
-      if (markersArray) {
-        for (i in markersArray) {
-          markersArray[i].setMap(null);
-        }
-        markersArray.length = 0;
-      }
-    }
-
     //reset type=date inputs to text
     $( document ).bind( "mobileinit", function(){
       $.mobile.page.prototype.options.degradeInputs.date = true;
     });
-
-    // mapy stuff
-    function loadMap() {
-
-      var latitude = 50.9;
-      var longitude = 0.4;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          latitude = position.coords.latitude;
-          longitude = position.coords.longitude;
-        });
-      }
-      var myOptions = {
-        center: new google.maps.LatLng(latitude, longitude),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      map = new google.maps.Map(document.getElementById("map"),
-          myOptions);
-    }
   </script>
 
   <script src="gui.js"></script>
   <script src="search.js"></script>
 </head> 
-<body onLoad="loadMap()"> 
-  
+<body> 
 
   <div data-role="page" id="feeds" data-theme="d"> 
 

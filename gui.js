@@ -21,12 +21,11 @@ function createResultItem(opportunity) {
 	};
     var id = opportunity.id;
 	var distance = opportunity.distance;
-	var latitude = opportunity.geoLocation.latitude;
-	var longitude = opportunity.geoLocation.longitude;
-
-	var location = new google.maps.LatLng(latitude, longitude);
-	addMarker(location);
-
+    var latitude = opportunity.geoLocation.latitude;
+    var longitude = opportunity.geoLocation.longitude;
+ 
+    var location = new google.maps.LatLng(latitude, longitude);
+    addMarker(location);
     return String.format(ITEM_TEMPLATE, title, date, description, distance, id);
 }
 
@@ -40,10 +39,50 @@ function populateSearch(oportunities) {
 	resultList.listview('refresh');
 }
 
+var map;
+var markersArray = [];
+
+function addMarker(location) {
+  marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+  markersArray.push(marker);
+}
+
+// Removes the overlays from the map, but keeps them in the array
+function clearOverlays() {
+  if (markersArray) {
+    for (i in markersArray) {
+      markersArray[i].setMap(null);
+    }
+  }
+}
+
+// Shows any overlays currently in the array
+function showOverlays() {
+  if (markersArray) {
+    for (i in markersArray) {
+      markersArray[i].setMap(map);
+    }
+  }
+}
+
+// Deletes all markers in the array by removing references to them
+function deleteOverlays() {
+  if (markersArray) {
+    for (i in markersArray) {
+      markersArray[i].setMap(null);
+    }
+    markersArray.length = 0;
+  }
+}
+
 var router = new $.mobile.Router({
-    "#event-details(?:[/?](.*))?": "eventDetails",
+    "#event-details(?:[/?](.*))?": "eventDetailsPage",
+    "#search": "searchPage",
 },{
-    eventDetails: function(type, match, ui){
+    eventDetailsPage: function(type, match, ui){
         $.ajax({
             url: 'http://localhost:8000/openplanetideas-plusyou-provider/opportunities/'+match[1],
             success: function(data) {
@@ -62,7 +101,24 @@ var router = new $.mobile.Router({
                 $('#event-details .event-details').html(html);
             },
         });
+    },
+
+    searchPage: function loadMap() {
+        var latitude = 50.9;
+        var longitude = 0.4;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+            });
+        }
+        var myOptions = {
+            center: new google.maps.LatLng(latitude, longitude),
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map($("#map")[0], myOptions);
     }
 }, { 
-    defaultHandlerEvents: "s"
+    defaultHandlerEvents: "bs"
 });
