@@ -50,13 +50,12 @@ var router = new $.mobile.Router({
                 var o = $.xml2json(data)
                 var html = '';
                 html += '<h1>'+o.title+'</h1><p>'+o.description+'</p>';
-                if (o.interests.interest) {
-                    html += '<ul class="">';
-                    $.each(o.interests.interest, function() {
-                        html += '<li>'+this.name+'</li>';
-                    });
-                    html += '</ul>';
-                }
+                var interests = $.isArray(o.interests.interest) ? o.interests.interest : [o.interests.interest];
+                html += '<ul class="interests">';
+                $.each(interests, function() {
+                    html += '<li>'+this.name+'</li>';
+                });
+                html += '</ul>';
                 html += '<div class="divider"></div>';
                 html += '<div class="where"><span class="street">'+o.address.street+'</span><span class="postcode">'+o.address.postcode+'</span></div>';
                 html += '<div class="when"><span class="date">'+dateFormat(o.date, 'ddd d mmm yyyy')+'</span><span class="begin-time">@'+dateFormat(o.beginTime, 'h:MM TT')+'</span></div>';
