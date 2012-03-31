@@ -185,3 +185,7 @@
 	width: 100% !important;
 }
 
+/* awards page */
+.award {
+	display: inline-block;
+}

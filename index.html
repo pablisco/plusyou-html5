@@ -17,7 +17,7 @@
   <script src="date.format.js"></script>
   <script src="gui.js"></script>
   <script src="search.js"></script>
-  <script src="awards.js"></script>
+  <!-- <script src="awards.js"></script> -->
   <script src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
   <script src="libs/jquery.ui.datepicker.js"></script>
   <script src="libs/jquery.ui.datepicker.mobile.js"></script>
@@ -98,12 +98,28 @@
     	<div class="content-primary">
     		
 			<ul data-role="listview" id="awards-list">
-				<li data-role="list-divider">
-					AWARDS
-				</li>
-				<script type="text/javascript">
-				</script>
 			</ul>
+			
+			<script type="text/javascript">
+				var list = $('#awards-list');
+				$.getJSON('awards.json', function(awards) {
+					console.log(awards);
+					for (var category in awards) {
+						var heading = $(document.createElement('li'));
+						heading.text(category).attr('data-role', 'list-divider').attr('id', category);
+						var award_bar = $(document.createElement('li'));
+						award_bar.attr('data-role', 'list-item').attr('id', category+"-bar");
+						list.append(heading);
+						for (var award in awards[category]) {
+							var item = $(document.createElement('div'));
+							item.append('<img src="pics/awards/award_ic_' + awards[category][award].icon + '.png" />');
+							item.attr('class', 'award').attr('id', award);
+							award_bar.append(item);
+						}
+						list.append(award_bar);
+					}
+				});
+			</script>
     		
     	</div>
     </div>
