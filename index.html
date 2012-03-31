@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="libs/jquery.ui.datepicker.css" />
+  <!-- HACK :D Can't make $.getJSON work to load as a JSON file -->
+  <script type="text/javascript" src="awards_list.js"></script>
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBldGW_ZqvaIfJdqOf4UCEDh0VUWK-rFlU&sensor=true">
     </script>
@@ -162,28 +164,34 @@
     <div data-role="content">
     	<div class="content-primary">
     		
-			<ul data-role="listview" id="awards-list">
+			<ul data-role="listview" data-divider-theme="d" id="awards-list">
 			</ul>
 			
 			<script type="text/javascript">
 				var list = $('#awards-list');
-				$.getJSON('awards.json', function(awards) {
-					console.log(awards);
-					for (var category in awards) {
-						var heading = $(document.createElement('li'));
-						heading.text(category).attr('data-role', 'list-divider').attr('id', category);
-						var award_bar = $(document.createElement('li'));
-						award_bar.attr('data-role', 'list-item').attr('id', category+"-bar");
-						list.append(heading);
-						for (var award in awards[category]) {
-							var item = $(document.createElement('div'));
-							item.append('<img src="pics/awards/award_ic_' + awards[category][award].icon + '.png" />');
-							item.attr('class', 'award').attr('id', award);
-							award_bar.append(item);
-						}
-						list.append(award_bar);
+				
+				// loop through award categories listing the awards in each
+				for (var category in AWARDS_LIST) {
+					var heading = $(document.createElement('li'));
+					heading.text(category).attr('data-role', 'list-divider').attr('id', category);
+					var award_bar = $(document.createElement('li'));
+					award_bar.attr('data-role', 'list-item').attr('id', category+"-bar");
+					list.append(heading);
+					
+					// list through each award incatgory creating award element
+					for (var award in AWARDS_LIST[category]) {
+						var item = $(document.createElement('div'));
+						item.append('<img src="pics/awards/award_ic_' + AWARDS_LIST[category][award].icon + '.png" />');
+						item.append('<span>' + award + '</span>');
+						item.attr('class', 'award').attr('id', award);
+						item.click(function() {
+							// not pretty
+							alert(AWARDS_LIST[category][award].desc);
+						});
+						award_bar.append(item);
 					}
-				});
+					list.append(award_bar);
+				}
 			</script>
     		
     	</div>

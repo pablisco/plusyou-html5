@@ -187,6 +187,19 @@
 /* awards page */
 .award {
 	display: inline-block;
+	text-align: center;
+	margin: 2px 8px;
+	width: 80px;
+}
+
+.award IMG {
+	display: block;
+	margin: auto;
+}
+
+.award SPAN {
+	font-size: 10px;
+	word-break: break-word;
 }
 
 .header {
