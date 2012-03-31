@@ -127,7 +127,7 @@ var router = new $.mobile.Router({
     },
     eventDetailsPage: function(type, match, ui){
         $.ajax({
-            url: 'http://localhost:8000/openplanetideas-plusyou-provider/opportunities/'+match[1],
+            url: '/openplanetideas-plusyou-provider/opportunities/'+match[1],
             success: function(data) {
                 var o = $.xml2json(data)
                 var html = '';
