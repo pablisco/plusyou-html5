@@ -25,7 +25,7 @@ function createResultItem(opportunity) {
     var longitude = opportunity.geoLocation.longitude;
  
     var location = new google.maps.LatLng(latitude, longitude);
-    addMarker(location);
+    addMarker(location, title, id);
     return String.format(ITEM_TEMPLATE, title, date, description, distance, id);
 }
 
@@ -39,7 +39,11 @@ function populateSearch(oportunities) {
 	resultList.listview('refresh');
 	var latlngbounds = new google.maps.LatLngBounds();
 	$.each(markersArray, function(n){
-	   latlngbounds.extend(n.position);
+		var marker = markersArray[n];
+		if (marker.position != undefined) {
+			latlngbounds.extend(marker.position);
+		};
+	   
 	});
 	map.setCenter(latlngbounds.getCenter());
 	map.fitBounds(latlngbounds); 
@@ -48,10 +52,14 @@ function populateSearch(oportunities) {
 var map;
 var markersArray = [];
 
-function addMarker(location) {
+function addMarker(location, title, id) {
   marker = new google.maps.Marker({
     position: location,
-    map: map
+    map: map,
+    title : title
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+  	window.location = "#event-details?" + id;
   });
   markersArray.push(marker);
 }
