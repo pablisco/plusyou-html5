@@ -7,11 +7,73 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="libs/jquery.ui.datepicker.css" />
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBldGW_ZqvaIfJdqOf4UCEDh0VUWK-rFlU&sensor=true">
+    </script>
   <script>
+
+    var map;
+    var markersArray = [];
+
+    function addMarker(location) {
+      marker = new google.maps.Marker({
+        position: location,
+        map: map
+      });
+      markersArray.push(marker);
+    }
+
+    // Removes the overlays from the map, but keeps them in the array
+    function clearOverlays() {
+      if (markersArray) {
+        for (i in markersArray) {
+          markersArray[i].setMap(null);
+        }
+      }
+    }
+
+    // Shows any overlays currently in the array
+    function showOverlays() {
+      if (markersArray) {
+        for (i in markersArray) {
+          markersArray[i].setMap(map);
+        }
+      }
+    }
+
+    // Deletes all markers in the array by removing references to them
+    function deleteOverlays() {
+      if (markersArray) {
+        for (i in markersArray) {
+          markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+      }
+    }
+
     //reset type=date inputs to text
     $( document ).bind( "mobileinit", function(){
       $.mobile.page.prototype.options.degradeInputs.date = true;
-    }); 
+    });
+
+    // mapy stuff
+    function loadMap() {
+
+      var latitude = 50.9;
+      var longitude = 0.4;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          latitude = position.coords.latitude;
+          longitude = position.coords.longitude;
+        });
+      }
+      var myOptions = {
+        center: new google.maps.LatLng(latitude, longitude),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("map"),
+          myOptions);
+    }
   </script>
   <script src="jquery.xml2json.js"></script>
   <script src="date.format.js"></script>
@@ -21,12 +83,12 @@
   <script src="libs/jquery.ui.datepicker.js"></script>
   <script src="libs/jquery.ui.datepicker.mobile.js"></script>
 </head> 
-<body> 
+<body onLoad="loadMap()"> 
   
 
-  <div data-role="page" id="feeds"> 
+  <div data-role="page" id="feeds" data-theme="d"> 
 
-    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+    <div data-role="header" data-theme="d" class="header"><img src="pics/logo.png" /> Plus you</div>
 
     <div data-role="navbar" class="nav-plusyou">
       <ul>
@@ -37,13 +99,13 @@
       </ul>
     </div>
     <div data-role="content">
-      My feed
+      My Feed
     </div>    
 </div>
 
   <div data-role="page" id="search"> 
 
-    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+    <div data-role="header" data-theme="d" class="header"><img src="pics/logo.png" /> Plus you</div>
 
     <div data-role="navbar" class="nav-plusyou">
       <ul>
@@ -54,20 +116,23 @@
       </ul>
     </div>
     <div data-role="content">
+
       <div class="search-options">
-        <a data-inline="true" data-role="button" href="#">Map</a>        
+        <a data-inline="true" data-role="button" href="#" id="mapButton">Map</a>   
+        <a data-inline="true" data-role="button" href="#" id="listButton">List</a>        
         <a data-inline="true" data-role="button" href="#options_dialog" data-theme="b" data-rel="dialog">Options</a>
 
       </div>
+      <div id="map" class="map"></div>
       <ul data-role="listview" class="opportunities" data-filter="true"  data-filter-placeholder="Filter this list" id="results-list">
-        <li>Loading...</a></li>
+        <li>Loading...</li>
       </ul>
     </div>     
   </div>
 
   <div data-role="page" id="myevents"> 
 
-    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+    <div data-role="header" data-theme="d" class="header"><img src="pics/logo.png" /> Plus you</div>
 
     <div data-role="navbar" class="nav-plusyou">
       <ul>
@@ -82,7 +147,7 @@
 
   <div data-role="page" id="awards"> 
 
-    <div data-role="header" data-theme="b"> <img src="pics/logo.png" width="60px" height="40px"> Plus you</div>
+    <div data-role="header" data-theme="d" class="header"><img src="pics/logo.png" /> Plus you</div>
 
     <div data-role="navbar" class="nav-plusyou">
       <ul>
@@ -136,15 +201,15 @@
           <option value="100">Up to 100 km away</option>
         </select>
       </div>
-      </form>
-      Your current loaction is #pending#
+
+      <p>Your current loaction is #pending#</p>
       <div date-role="fieldcontain" id="bottom-buttons">
-        <a data-inline="true" data-role="button" href="#" data-theme="b" data-rel="dialog">Search</a>
-        <a data-inline="true" data-role="button" href="#" data-rel="back">Cancel</a>        
-      </div>   
+        <input type="submit" data-theme="b"  value="Search">
+        <a data-role="button" href="#" data-rel="back">Cancel</a>        
+      </div>  
+      </form> 
     </div>
   </div>
-
 
 </body>
 </html>
