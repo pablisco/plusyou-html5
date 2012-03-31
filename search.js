@@ -45,7 +45,18 @@ $('#mapButton').bind("click", function(event, ui) {
   $('#mapButton').hide();
   $('#listButton').show();
   $('.ui-listview-filter').hide();
-  //var the_height = ($(window).height() - $(this).find('[data-role="header"]').height() - $(this).find('[data-role="footer"]').height() - $('.search-options').height());
+  var height = $(window).height();
+        
+  // var $map = $("#map");
+  // $map.siblings().each(function() {
+  //     height -= $(this).outerHeight();
+  // });
+  // $map.outerHeight(height);
+
+  $('#map').height(0);
+  $('#map').css('margin-bottom:', 0);
+  var the_height = ($(window).height() - $(this).find('[data-role="header"]').height() - $(this).find('[data-role="footer"]').height() - $('.search-options').height());
+  $('#map').height(the_height);
 });
 
 $('#listButton').bind("click", function(event, ui) {
@@ -54,6 +65,9 @@ $('#listButton').bind("click", function(event, ui) {
   $('#mapButton').show();
   $('#listButton').hide();
   $('#map').addClass('hidden');
+
+  $('#map').css('margin-bottom:', -400);
+  $('#map').height(400);
 });
 
 });

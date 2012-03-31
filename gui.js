@@ -37,6 +37,12 @@ function populateSearch(oportunities) {
 		resultList.append(data);
 	});
 	resultList.listview('refresh');
+	var latlngbounds = new google.maps.LatLngBounds();
+	$.each(markersArray, function(n){
+	   latlngbounds.extend(n.position);
+	});
+	map.setCenter(latlngbounds.getCenter());
+	map.fitBounds(latlngbounds); 
 }
 
 var map;
