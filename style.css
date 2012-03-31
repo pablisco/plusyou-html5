@@ -26,6 +26,15 @@
 	display: inline;
 }
 
+#event-details .interests li + li:before {
+    content: ', ';
+}
+#event-details .interests li {
+    list-style: none;
+    display: inline;
+    color: #6A7B8C;
+}
+
 #event-details .where {
     width: 50%;
     float: left;
