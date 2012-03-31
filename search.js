@@ -34,27 +34,26 @@ $(document).delegate('#search', 'pageinit', function() {
     });
   };
 
-
   $('#results-list').show();
   $('#mapButton').show();
-  $('#map').hide();
   $('#listButton').hide();
+  $('#map').addClass('hidden');
 
 $('#mapButton').bind("click", function(event, ui) {
+  $('#map').removeClass('hidden');
   $('#results-list').hide();
   $('#mapButton').hide();
-  $('#map').show();
   $('#listButton').show();
-  // recalculte height
-  var the_height = ($(window).height() - $(this).find('[data-role="header"]').height() - $(this).find('[data-role="footer"]').height() - $('.search-options').height());
-  $('#map').height(the_height);
+  $('.ui-listview-filter').hide();
+  //var the_height = ($(window).height() - $(this).find('[data-role="header"]').height() - $(this).find('[data-role="footer"]').height() - $('.search-options').height());
 });
 
 $('#listButton').bind("click", function(event, ui) {
   $('#results-list').show();
+  $('.ui-listview-filter').show();
   $('#mapButton').show();
-  $('#map').hide();
   $('#listButton').hide();
+  $('#map').addClass('hidden');
 });
 
 });
