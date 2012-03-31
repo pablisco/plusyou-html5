@@ -33,3 +33,11 @@ function populateSearch(oportunities) {
 	});
 	resultList.listview('refresh');
 }
+
+function populateAwards(awards) {
+	var awardList = $('awards-list');
+	awardList.emprty();
+	$.each(awards, function(rowIndex) {
+		
+	});
+}
