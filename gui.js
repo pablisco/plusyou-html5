@@ -93,20 +93,17 @@ function deleteOverlays() {
 }
 
 function loadMap(elemID) {
-    var latitude = 50.9;
-    var longitude = 0.4;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-        });
-    }
+    var map;
     var myOptions = {
-        center: new google.maps.LatLng(latitude, longitude),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        panControl: false,
+        zoomControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        mapTypeControl: false
     };
-    return new google.maps.Map($(elemID)[0], myOptions);
+    map = new google.maps.Map($(elemID)[0], myOptions);
+    return map
 }
 
 $(document).delegate('#event-details', 'pageinit', function() {
@@ -145,7 +142,32 @@ var router = new $.mobile.Router({
                 html += '<div class="where"><span class="street">'+o.address.street+'</span><span class="postcode">'+o.address.postcode+'</span></div>';
                 html += '<div class="when"><span class="date">'+dateFormat(o.date, 'ddd d mmm yyyy')+'</span><span class="begin-time">@'+dateFormat(o.beginTime, 'h:MM TT')+'</span></div>';
                 $('#event-details .event-details').html(html);
-                loadMap('#event-map');
+                var latitude = o.geoLocation.latitude;
+                var longitude = o.geoLocation.longitude;
+                map = loadMap('#event-map', latitude, longitude);
+                var latlngbounds = map.getBounds() || new google.maps.LatLngBounds(); 
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(latitude, longitude),
+                    map: map
+                });
+	            latlngbounds.extend(marker.position);
+	            map.setCenter(latlngbounds.getCenter());
+	            map.fitBounds(latlngbounds); 
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(latitude, longitude),
+                            map: map,
+                            icon: 'pics/map_me_indicator.png'
+                        });
+                        latlngbounds.extend(marker.position);
+                        map.setCenter(latlngbounds.getCenter());
+                        map.fitBounds(latlngbounds); 
+                    });
+                }
+                return map
             },
         });
     }
