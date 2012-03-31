@@ -78,10 +78,42 @@ function deleteOverlays() {
   }
 }
 
+function loadMap(elemID) {
+    var latitude = 50.9;
+    var longitude = 0.4;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+        });
+    }
+    var myOptions = {
+        center: new google.maps.LatLng(latitude, longitude),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    return new google.maps.Map($(elemID)[0], myOptions);
+}
+
+$(document).delegate('#event-details', 'pageinit', function() {
+    $(window).bind("orientationchange resize updatelayout", function() {
+        var height = $(window).height();
+        
+        var $eventMap = $("#event-map");
+        $eventMap.siblings().each(function() {
+            height -= $(this).outerHeight();
+        });
+        $eventMap.outerHeight(height);
+    });
+});
+
 var router = new $.mobile.Router({
     "#event-details(?:[/?](.*))?": "eventDetailsPage",
     "#search": "searchPage",
 },{
+    searchPage: function loadMap() {
+        map = loadMap('#map');
+    },
     eventDetailsPage: function(type, match, ui){
         $.ajax({
             url: 'http://localhost:8000/openplanetideas-plusyou-provider/opportunities/'+match[1],
@@ -99,25 +131,10 @@ var router = new $.mobile.Router({
                 html += '<div class="where"><span class="street">'+o.address.street+'</span><span class="postcode">'+o.address.postcode+'</span></div>';
                 html += '<div class="when"><span class="date">'+dateFormat(o.date, 'ddd d mmm yyyy')+'</span><span class="begin-time">@'+dateFormat(o.beginTime, 'h:MM TT')+'</span></div>';
                 $('#event-details .event-details').html(html);
+                $(window).resize();
+                loadMap('#event-map');
             },
         });
-    },
-
-    searchPage: function loadMap() {
-        var latitude = 50.9;
-        var longitude = 0.4;
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
-            });
-        }
-        var myOptions = {
-            center: new google.maps.LatLng(latitude, longitude),
-            zoom: 8,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map($("#map")[0], myOptions);
     }
 }, { 
     defaultHandlerEvents: "bs"
