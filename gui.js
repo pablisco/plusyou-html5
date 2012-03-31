@@ -20,6 +20,11 @@ function createResultItem(oportunity) {
 		description = description.substring(0, DESCRIPTION_LENGTH_LIMIT - 3) + "...";
 	};
 	var distance = oportunity.distance;
+	var latitude = oportunity.geoLocation.latitude;
+	var longitude = oportunity.geoLocation.longitude;
+
+	var location = new google.maps.LatLng(latitude, longitude);
+	addMarker(location);
 
 	return String.format(ITEM_TEMPLATE, title, date, description, distance);
 }

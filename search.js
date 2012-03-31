@@ -33,4 +33,28 @@ $(document).delegate('#search', 'pageinit', function() {
       },
     });
   };
+
+
+  $('#results-list').show();
+  $('#mapButton').show();
+  $('#map').hide();
+  $('#listButton').hide();
+
+$('#mapButton').bind("click", function(event, ui) {
+  $('#results-list').hide();
+  $('#mapButton').hide();
+  $('#map').show();
+  $('#listButton').show();
+  // recalculte height
+  var the_height = ($(window).height() - $(this).find('[data-role="header"]').height() - $(this).find('[data-role="footer"]').height() - $('.search-options').height());
+  $('#map').height(the_height);
+});
+
+$('#listButton').bind("click", function(event, ui) {
+  $('#results-list').show();
+  $('#mapButton').show();
+  $('#map').hide();
+  $('#listButton').hide();
+});
+
 });
