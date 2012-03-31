@@ -96,7 +96,7 @@ function loadMap(elemID) {
 }
 
 $(document).delegate('#event-details', 'pageinit', function() {
-    $(window).bind("orientationchange resize updatelayout", function() {
+    $(window).bind("orientationchange resize pageshow", function() {
         var height = $(window).height();
         
         var $eventMap = $("#event-map");
@@ -131,7 +131,6 @@ var router = new $.mobile.Router({
                 html += '<div class="where"><span class="street">'+o.address.street+'</span><span class="postcode">'+o.address.postcode+'</span></div>';
                 html += '<div class="when"><span class="date">'+dateFormat(o.date, 'ddd d mmm yyyy')+'</span><span class="begin-time">@'+dateFormat(o.beginTime, 'h:MM TT')+'</span></div>';
                 $('#event-details .event-details').html(html);
-                $(window).resize();
                 loadMap('#event-map');
             },
         });
