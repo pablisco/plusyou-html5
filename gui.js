@@ -109,9 +109,9 @@ $(document).delegate('#event-details', 'pageinit', function() {
 
 var router = new $.mobile.Router({
     "#event-details(?:[/?](.*))?": "eventDetailsPage",
-    "#search": "searchPage",
+    "#search": "searchPage"
 },{
-    searchPage: function loadMap() {
+    searchPage: function() {
         map = loadMap('#map');
     },
     eventDetailsPage: function(type, match, ui){
